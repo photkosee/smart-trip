@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 const Header = () => {
   const [top, setTop] = useState<boolean>(false);
@@ -26,16 +27,17 @@ const Header = () => {
     >
       <div className="container max-w-6xl mx-auto px-5">
         <div className="flex justify-between items-center gap-x-6 mx-auto">
-          <div className="flex gap-x-1 items-center">
+          <Link href="/" className="flex gap-x-1 items-center">
             <Image
               src="/smart-trip-logo.png"
               alt="Logo"
               priority
-              width={35}
-              height={35}
+              width={32}
+              height={32}
+              className="w-auto"
             />
             <h2 className="text-xl">Smart Trip</h2>
-          </div>
+          </Link>
           <Button className="self-center rounded-full">Sign In</Button>
         </div>
       </div>
