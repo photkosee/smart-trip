@@ -20,11 +20,9 @@ const Header = () => {
 
   return (
     <header
-      className={`
-      ${
-        top ? "bg-white shadow-lg dark:bg-accent" : "dark:bg-transparent"
-      } sticky py-3 top-0 z-30 transition-all w-full flex
-      `}
+      className={`sticky py-3 sm:p-4 top-0 z-30 transition-all w-full flex ${
+        top && "bg-white shadow-lg"
+      }`}
     >
       <div className="container max-w-6xl mx-auto px-5">
         <div className="flex justify-between items-center gap-x-6 mx-auto">
