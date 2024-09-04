@@ -1,26 +1,26 @@
-"use client";
-
-import { useState } from "react";
 import { LiaUserFriendsSolid } from "react-icons/lia";
 import { GiLovers } from "react-icons/gi";
 import { MdFamilyRestroom } from "react-icons/md";
 
 import { Button } from "@/components/ui/button";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { useNewTripContext } from "@/app/new-trip/NewTripContext";
 
 const PeoplePicker = () => {
-  const [count, setCount] = useState(1);
-  const [companions, setCompanions] = useState<
-    "couple" | "family" | "friend"
-  >();
+  const { peopleCount, setPeopleCount, companions, setCompanions } =
+    useNewTripContext();
 
   const increment = () => {
-    setCount(count + 1);
+    if (peopleCount === 2 && companions === "couple") {
+      setCompanions("family");
+    }
+
+    setPeopleCount(peopleCount + 1);
   };
 
   const decrement = () => {
-    if (count === 1) return;
-    setCount(count - 1);
+    if (peopleCount === 1) return;
+    setPeopleCount(peopleCount - 1);
   };
 
   return (
@@ -28,23 +28,24 @@ const PeoplePicker = () => {
       <div className="flex flex-col gap-y-3">
         <h3>How many people are going?</h3>
         <div
-          className="flex h-12 w-full rounded-md border border-input bg-transparent px-3 py-2
-          text-sm shadow-sm items-center justify-between"
+          className="flex h-12 w-full rounded-md border border-input bg-transparent
+          px-3 py-2 text-sm shadow-sm items-center justify-between"
         >
           <div className="flex items-center gap-x-2">
             <div
               className="rounded-md border py-1 px-4 w-12 flex justify-center
               bg-secondary border-input"
             >
-              {count}
+              {peopleCount}
             </div>
-            <p>{count === 1 ? "Person" : "People"}</p>
+            <p>{peopleCount === 1 ? "Person" : "People"}</p>
           </div>
 
           <div className="flex items-center gap-x-2">
             <Button
               onClick={decrement}
               className="border border-input bg-white text-black hover:bg-gray-100"
+              disabled={peopleCount === 1}
             >
               -
             </Button>
@@ -58,15 +59,21 @@ const PeoplePicker = () => {
         </div>
       </div>
 
-      {count > 1 ? (
+      {peopleCount > 1 ? (
         <div className="flex flex-col gap-y-3">
           <h3>Who is traveling with you?</h3>
 
-          <ToggleGroup variant="outline" type="single" className="w-full flex">
-            {count < 3 ? (
+          <ToggleGroup
+            variant="outline"
+            type="single"
+            className="w-full flex"
+            value={companions}
+            onValueChange={setCompanions}
+          >
+            {peopleCount < 3 ? (
               <ToggleGroupItem
-                value="bold"
-                aria-label="Toggle bold"
+                value="couple"
+                aria-label="Toggle couple"
                 className="gap-x-2 flex-1"
               >
                 <GiLovers className="h-5 w-5" />
@@ -74,16 +81,16 @@ const PeoplePicker = () => {
               </ToggleGroupItem>
             ) : null}
             <ToggleGroupItem
-              value="italic"
-              aria-label="Toggle italic"
+              value="friends"
+              aria-label="Toggle friends"
               className="gap-x-2 flex-1"
             >
               <LiaUserFriendsSolid className="h-5 w-5" />
               Friends
             </ToggleGroupItem>
             <ToggleGroupItem
-              value="underline"
-              aria-label="Toggle underline"
+              value="family"
+              aria-label="Toggle family"
               className="gap-x-2 flex-1"
             >
               <MdFamilyRestroom className="h-5 w-5" />

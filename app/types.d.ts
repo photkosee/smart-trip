@@ -1,0 +1,1 @@
+export type CompanionsType = "couple" | "family" | "friends";
