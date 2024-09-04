@@ -3,10 +3,12 @@ import { createContext, useContext, useState } from "react";
 import { CompanionsType } from "@/app/types";
 
 interface NewTripContextType {
+  place: string;
   dayCount: number;
   budget: number;
   peopleCount: number;
   companions: CompanionsType;
+  setPlace: (place: string) => void;
   setDayCount: (count: number) => void;
   setBudget: (budget: number) => void;
   setPeopleCount: (count: number) => void;
@@ -18,7 +20,8 @@ const NewTripContext = createContext<NewTripContextType | undefined>(undefined);
 export const NewTripProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [dayCount, setDayCount] = useState<number>(0);
+  const [place, setPlace] = useState<string>("");
+  const [dayCount, setDayCount] = useState<number>(1);
   const [budget, setBudget] = useState<number>(0);
   const [peopleCount, setPeopleCount] = useState<number>(1);
   const [companions, setCompanions] = useState<CompanionsType>("family");
@@ -26,10 +29,12 @@ export const NewTripProvider: React.FC<{ children: React.ReactNode }> = ({
   return (
     <NewTripContext.Provider
       value={{
+        place,
         dayCount,
         budget,
         peopleCount,
         companions,
+        setPlace,
         setDayCount,
         setBudget,
         setPeopleCount,

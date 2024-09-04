@@ -10,7 +10,10 @@ import { NewTripProvider } from "./NewTripContext";
 const NewTripPage = () => {
   return (
     <NewTripProvider>
-      <main className="flex min-h-[80vh] flex-col items-center justify-between py-7 bg-white">
+      <main
+        className="flex min-h-[80vh] flex-col items-center justify-between
+        pt-7 pb-[180px] bg-white"
+      >
         <div className="container max-w-xl flex flex-col gap-y-10 px-5 text-lg">
           <h2 className="text-xl lg:text-3xl text-center">
             Plan your next adventure

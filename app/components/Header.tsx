@@ -27,16 +27,15 @@ const Header = () => {
     >
       <div className="container max-w-6xl mx-auto px-5">
         <div className="flex justify-between items-center gap-x-6 mx-auto">
-          <Link href="/" className="flex gap-x-1 items-center">
+          <Link href="/">
             <Image
-              src="/smart-trip-logo.png"
+              src="/logo.svg"
               alt="Logo"
+              width={0}
+              height={0}
               priority
-              width={32}
-              height={32}
-              className="w-auto"
+              className="w-auto h-[50px]"
             />
-            <h2 className="text-xl">Smart Trip</h2>
           </Link>
           <Button className="self-center rounded-full">Sign In</Button>
         </div>

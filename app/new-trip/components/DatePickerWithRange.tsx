@@ -18,7 +18,10 @@ import { useNewTripContext } from "@/app/new-trip/NewTripContext";
 export function DatePickerWithRange({
   className,
 }: React.HTMLAttributes<HTMLDivElement>) {
-  const [date, setDate] = React.useState<DateRange | undefined>();
+  const [date, setDate] = React.useState<DateRange | undefined>({
+    from: new Date(),
+    to: new Date(),
+  });
   const { dayCount, setDayCount } = useNewTripContext();
 
   const handleSelect = (range: DateRange | undefined) => {
@@ -49,7 +52,7 @@ export function DatePickerWithRange({
             id="date"
             variant={"outline"}
             className={cn(
-              "w-[350px] justify-start text-left font-normal",
+              "w-auto justify-start text-left font-normal",
               !date && "text-muted-foreground"
             )}
           >
@@ -58,14 +61,14 @@ export function DatePickerWithRange({
               date.to ? (
                 <>
                   {format(date.from, "LLL dd, y")} -{" "}
-                  {format(date.to, "LLL dd, y")} ({dayCount >= 7 ? "max " : ""}
-                  {dayCount} {dayCount === 1 ? "day" : "days"})
+                  {format(date.to, "LLL dd, y")} ({dayCount}{" "}
+                  {dayCount === 1 ? "day" : "days"})
                 </>
               ) : (
                 format(date.from, "LLL dd, y")
               )
             ) : (
-              <span>Pick a date range</span>
+              <span>Pick a date range (Max 7 days)</span>
             )}
           </Button>
         </PopoverTrigger>
@@ -79,6 +82,10 @@ export function DatePickerWithRange({
             numberOfMonths={2}
             disabled={{ before: new Date() }}
           />
+
+          <div className="w-full flex justify-center pb-1">
+            Maximum range: 7 days
+          </div>
         </PopoverContent>
       </Popover>
     </div>
