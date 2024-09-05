@@ -15,9 +15,9 @@ import {
 } from "@/components/ui/popover";
 import { useNewTripContext } from "@/app/new-trip/NewTripContext";
 
-export function DatePickerWithRange({
+const DatePickerWithRange = ({
   className,
-}: React.HTMLAttributes<HTMLDivElement>) {
+}: React.HTMLAttributes<HTMLDivElement>) => {
   const [date, setDate] = React.useState<DateRange | undefined>({
     from: new Date(),
     to: new Date(),
@@ -90,4 +90,6 @@ export function DatePickerWithRange({
       </Popover>
     </div>
   );
-}
+};
+
+export default DatePickerWithRange;
