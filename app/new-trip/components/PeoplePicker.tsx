@@ -11,7 +11,7 @@ const PeoplePicker = () => {
     useNewTripContext();
 
   const increment = () => {
-    if (peopleCount === 2 && companions === "couple") {
+    if ((peopleCount === 2 && companions === "couple") || peopleCount === 1) {
       setCompanions("family");
     }
 
@@ -20,6 +20,9 @@ const PeoplePicker = () => {
 
   const decrement = () => {
     if (peopleCount === 1) return;
+    if (peopleCount === 2) {
+      setCompanions("solo");
+    }
     setPeopleCount(peopleCount - 1);
   };
 
@@ -81,7 +84,7 @@ const PeoplePicker = () => {
               </ToggleGroupItem>
             ) : null}
             <ToggleGroupItem
-              value="friends"
+              value="group of friends"
               aria-label="Toggle friends"
               className="gap-x-2 flex-1"
             >

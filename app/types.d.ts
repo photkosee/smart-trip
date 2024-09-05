@@ -1,1 +1,1 @@
-export type CompanionsType = "couple" | "family" | "friends";
+export type CompanionsType = "solo" | "couple" | "family" | "group of friends";
