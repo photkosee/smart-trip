@@ -2,6 +2,7 @@
 
 import React, { useRef, useEffect } from "react";
 import { Libraries, useLoadScript } from "@react-google-maps/api";
+import { FaRegCircleXmark } from "react-icons/fa6";
 
 import { Input } from "@/components/ui/input";
 import { useNewTripContext } from "@/app/new-trip/NewTripContext";
@@ -10,7 +11,7 @@ import Spinner from "@/app/components/Spinner";
 const libraries: Libraries = ["places"];
 
 const AutoCompleteInput: React.FC = () => {
-  const { setPlace } = useNewTripContext();
+  const { place, setPlace } = useNewTripContext();
   const inputRef = useRef<HTMLInputElement | null>(null);
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_PLACE_API!,
@@ -38,19 +39,31 @@ const AutoCompleteInput: React.FC = () => {
   }, [isLoaded, loadError, setPlace]);
 
   return (
-    <div>
+    <>
       {!isLoaded ? (
         <div className="w-full flex justify-center mb-1">
           <Spinner />
         </div>
       ) : (
-        <Input
-          ref={inputRef}
-          type="text"
-          placeholder="Select a city or country"
-        />
+        <div className="flex flex-col gap-y-1">
+          <Input
+            ref={inputRef}
+            type="text"
+            placeholder="Select a city or country"
+            value={place}
+            onChange={(e) => setPlace(e.target.value)}
+            className={`${place.length < 1 && "ring-1 ring-red-500"}`}
+          />
+
+          {place.length < 1 ? (
+            <div className="text-red-500 text-sm flex gap-x-1 items-center">
+              <FaRegCircleXmark />
+              Please select a city or country
+            </div>
+          ) : null}
+        </div>
       )}
-    </div>
+    </>
   );
 };
 

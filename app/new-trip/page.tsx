@@ -12,6 +12,9 @@ const NewTripPage = () => {
     useNewTripContext();
 
   const generateTrip = async () => {
+    const budgetToString =
+      budget === 0 ? "cheap" : budget === 1 ? "mid" : "high";
+
     try {
       const response = await fetch("/api/generate-trip", {
         method: "POST",
@@ -21,7 +24,7 @@ const NewTripPage = () => {
         body: JSON.stringify({
           place,
           dayCount,
-          budget,
+          budget: budgetToString,
           peopleCount,
           companions,
         }),
@@ -68,6 +71,7 @@ const NewTripPage = () => {
           className="px-7 py-6 rounded-full bg-[#33b377] hover:bg-[#61e288]
             text-lg mx-auto"
           onClick={generateTrip}
+          disabled={!place || !dayCount}
         >
           Plan my trip
         </Button>

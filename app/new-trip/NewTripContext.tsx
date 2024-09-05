@@ -20,7 +20,7 @@ const NewTripContext = createContext<NewTripContextType | undefined>(undefined);
 export const NewTripProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [place, setPlace] = useState<string>("");
+  const [place, setPlace] = useState<string>("Thailand");
   const [dayCount, setDayCount] = useState<number>(1);
   const [budget, setBudget] = useState<number>(0);
   const [peopleCount, setPeopleCount] = useState<number>(1);

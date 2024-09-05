@@ -4,6 +4,7 @@ import * as React from "react";
 import { addDays, differenceInCalendarDays, format } from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
 import { DateRange } from "react-day-picker";
+import { FaRegCircleXmark } from "react-icons/fa6";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -39,6 +40,9 @@ const DatePickerWithRange = ({
       }
     } else if (range?.from) {
       setDayCount(1);
+    } else {
+      // If both dates are cleared, set dayCount to 0
+      setDayCount(0);
     }
 
     setDate(range);
@@ -53,19 +57,29 @@ const DatePickerWithRange = ({
             variant={"outline"}
             className={cn(
               "w-auto justify-start text-left font-normal",
-              !date && "text-muted-foreground"
+              !date && "text-muted-foreground",
+              dayCount === 0 && "ring-1 ring-red-500"
             )}
           >
             <CalendarIcon className="mr-2 h-4 w-4" />
             {date?.from ? (
-              date.to ? (
+              date.to && date.from !== date.to ? (
                 <>
                   {format(date.from, "LLL dd, y")} -{" "}
-                  {format(date.to, "LLL dd, y")} ({dayCount}{" "}
-                  {dayCount === 1 ? "day" : "days"})
+                  {format(date.to, "LLL dd, y")} (
+                  {dayCount === 7
+                    ? "max"
+                    : `${dayCount} ${dayCount === 1 ? "day" : "days"}`}
+                  )
                 </>
               ) : (
-                format(date.from, "LLL dd, y")
+                <>
+                  {format(date.from, "LLL dd, y")} (
+                  {dayCount === 7
+                    ? "max"
+                    : `${dayCount} ${dayCount === 1 ? "day" : "days"}`}
+                  )
+                </>
               )
             ) : (
               <span>Pick a date range (Max 7 days)</span>
@@ -88,6 +102,13 @@ const DatePickerWithRange = ({
           </div>
         </PopoverContent>
       </Popover>
+
+      {dayCount === 0 ? (
+        <div className="text-red-500 text-sm flex gap-x-1 items-center">
+          <FaRegCircleXmark />
+          Please select a date
+        </div>
+      ) : null}
     </div>
   );
 };
