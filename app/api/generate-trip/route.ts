@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-export async function GET(req: Request) {
+export async function POST(req: Request) {
   try {
     const data = await req.json();
     const { place, dayCount, companions, peopleCount, budget } = data;

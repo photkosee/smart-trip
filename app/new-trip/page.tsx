@@ -14,7 +14,7 @@ const NewTripPage = () => {
   const generateTrip = async () => {
     try {
       const response = await fetch("/api/generate-trip", {
-        method: "GET",
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
