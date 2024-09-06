@@ -1,10 +1,13 @@
 import { NextResponse } from "next/server";
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { setDoc, doc } from "firebase/firestore";
+
+import { db } from "@/app/firebase";
 
 export async function POST(req: Request) {
   try {
     const data = await req.json();
-    const { place, dayCount, companions, peopleCount, budget } = data;
+    const { place, dayCount, companions, peopleCount, budget, email } = data;
 
     const prompt = process.env.NEXT_PUBLIC_AI_PROMPT!
       .replace("$PLACE", place)
@@ -46,11 +49,21 @@ export async function POST(req: Request) {
       ],
     });
 
+    // Send the prompt to the AI
     const result = await chatSession.sendMessage(prompt);
     const response = result.response;
     const output = response.text();
 
-    return NextResponse.json({ output: output }, { status: 200 });
+    // Save the trip data to the database
+    const docId = Date.now().toString();
+    await setDoc(doc(db, "Trips", docId), {
+      id: docId,
+      userEmail: email,
+      userPreferences: { place, dayCount, companions, peopleCount, budget},
+      tripData: JSON.parse(output),
+    });
+
+    return NextResponse.json({ id: docId }, { status: 200 });
   } catch (error) {
     console.error("Error occurred:", error);
     return NextResponse.json({ error: error }, { status: 500 });
