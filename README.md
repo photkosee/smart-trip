@@ -10,6 +10,9 @@
 - Next.js
 - Tailwind CSS
 - shadcn/ui
+- React Icons
+- Google Generative AI
+- OAuth
 
 ## Author
 

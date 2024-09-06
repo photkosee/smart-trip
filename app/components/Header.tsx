@@ -5,9 +5,11 @@ import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import LoginDialog from "./LoginDialog";
 
 const Header = () => {
   const [top, setTop] = useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(false);
 
   useEffect(() => {
     // Whether the current scroll position is at the top of the page
@@ -18,6 +20,8 @@ const Header = () => {
 
     return () => window.removeEventListener("scroll", scrollYPosition);
   }, []);
+
+  const googleLogin = () => {};
 
   return (
     <header
@@ -37,9 +41,17 @@ const Header = () => {
               className="w-auto h-[50px]"
             />
           </Link>
-          <Button className="self-center rounded-full">Sign In</Button>
+          <Button
+            variant={!top ? "default" : "outline"}
+            className="self-center rounded-full"
+            onClick={() => setOpen(true)}
+          >
+            Sign In
+          </Button>
         </div>
       </div>
+
+      <LoginDialog open={open} setOpen={setOpen} />
     </header>
   );
 };

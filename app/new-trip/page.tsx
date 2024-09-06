@@ -1,19 +1,28 @@
 "use client";
 
+import { useState } from "react";
+
 import { Button } from "@/components/ui/button";
 import { useNewTripContext } from "@/app/new-trip/NewTripContext";
 import AutoCompleteInput from "@/app/new-trip/components/AutoCompleteInput";
 import BudgetPicker from "@/app/new-trip/components/BudgetPicker";
 import DatePickerWithRange from "@/app/new-trip/components/DatePickerWithRange";
 import PeoplePicker from "@/app/new-trip/components/PeoplePicker";
+import LoginDialog from "@/app/components/LoginDialog";
 
 const NewTripPage = () => {
   const { place, dayCount, budget, peopleCount, companions } =
     useNewTripContext();
+  const [open, setOpen] = useState<boolean>(false);
 
   const generateTrip = async () => {
     const budgetToString =
       budget === 0 ? "cheap" : budget === 1 ? "mid" : "high";
+
+    setOpen(true);
+    return;
+
+    // check login first
 
     try {
       const response = await fetch("/api/generate-trip", {
@@ -47,7 +56,7 @@ const NewTripPage = () => {
   return (
     <main
       className="flex min-h-[80vh] flex-col items-center justify-between
-        pt-7 pb-[180px] bg-white"
+      pt-7 pb-[180px] bg-white"
     >
       <div className="container max-w-xl flex flex-col gap-y-10 px-5 text-lg">
         <h2 className="text-xl lg:text-3xl text-center">
@@ -68,14 +77,16 @@ const NewTripPage = () => {
         <PeoplePicker />
 
         <Button
-          className="px-7 py-6 rounded-full bg-[#33b377] hover:bg-[#61e288]
-            text-lg mx-auto"
-          onClick={generateTrip}
+          className="px-7 py-6 rounded-full bg-green-800 hover:bg-green-700
+          text-lg mx-auto"
+          onClick={() => setOpen(true)}
           disabled={!place || !dayCount}
         >
           Plan my trip
         </Button>
       </div>
+
+      <LoginDialog open={open} setOpen={setOpen} />
     </main>
   );
 };
