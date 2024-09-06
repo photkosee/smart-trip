@@ -5,7 +5,7 @@ const FeatureSection = () => {
     <section className="bg-white py-12 text-black">
       <div className="mx-auto px-5 lg:px-7 my-10">
         <div className="text-center">
-          <h5 className="text-base text-[#61e288] font-medium uppercase tracking-wide">
+          <h5 className="text-base text-emerald-400 font-medium uppercase tracking-wide">
             smart trip
           </h5>
           <h2 className="text-center text-3xl md:text-4xl xl:text-5xl font-bold">
