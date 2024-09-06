@@ -9,7 +9,7 @@ const PromoteSection = () => {
           font-bold mb-10"
         >
           An&nbsp;
-          <span className="text-[#61e288]">AI-Powered</span>
+          <span className="text-emerald-400">AI-Powered</span>
           &nbsp;Tool
         </h2>
 
@@ -19,7 +19,7 @@ const PromoteSection = () => {
             sm:items-start sm:w-1/2 p-5 gap-y-3"
           >
             <h4
-              className="bg-[#61e288]/70 text-2xl lg:text-3xl
+              className="bg-emerald-400/70 text-2xl lg:text-3xl
               font-bold px-2 sm:pl-0"
             >
               Try this out
@@ -61,7 +61,7 @@ const PromoteSection = () => {
               sm:items-end gap-y-3"
             >
               <h4
-                className="bg-[#61e288]/70 text-2xl lg:text-3xl
+                className="bg-emerald-400/70 text-2xl lg:text-3xl
                 font-bold text-end px-2 sm:pr-0"
               >
                 Find Your Inspiration
