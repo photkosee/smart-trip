@@ -31,10 +31,10 @@ const DatePickerWithRange = ({
       const calculatedDayCount =
         differenceInCalendarDays(range.to, range.from) + 1;
 
-      // Ensure the range is no longer than 7 days
-      if (calculatedDayCount > 7) {
-        range.to = addDays(range.from, 6); // Set the maximum range to 7 days
-        setDayCount(7);
+      // Ensure the range is no longer than 5 days
+      if (calculatedDayCount > 5) {
+        range.to = addDays(range.from, 4); // Set the maximum range to 5 days
+        setDayCount(5);
       } else {
         setDayCount(calculatedDayCount);
       }
@@ -67,7 +67,7 @@ const DatePickerWithRange = ({
                 <>
                   {format(date.from, "LLL dd, y")} -{" "}
                   {format(date.to, "LLL dd, y")} (
-                  {dayCount === 7
+                  {dayCount === 5
                     ? "max"
                     : `${dayCount} ${dayCount === 1 ? "day" : "days"}`}
                   )
@@ -75,14 +75,14 @@ const DatePickerWithRange = ({
               ) : (
                 <>
                   {format(date.from, "LLL dd, y")} (
-                  {dayCount === 7
+                  {dayCount === 5
                     ? "max"
                     : `${dayCount} ${dayCount === 1 ? "day" : "days"}`}
                   )
                 </>
               )
             ) : (
-              <span>Pick a date range (Max 7 days)</span>
+              <span>Pick a date range (Max 5 days)</span>
             )}
           </Button>
         </PopoverTrigger>
@@ -98,7 +98,7 @@ const DatePickerWithRange = ({
           />
 
           <div className="w-full flex justify-center pb-1">
-            Maximum range: 7 days
+            Maximum range: 5 days
           </div>
         </PopoverContent>
       </Popover>

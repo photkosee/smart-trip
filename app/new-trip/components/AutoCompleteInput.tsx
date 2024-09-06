@@ -3,10 +3,10 @@
 import React, { useRef, useEffect } from "react";
 import { Libraries, useLoadScript } from "@react-google-maps/api";
 import { FaRegCircleXmark } from "react-icons/fa6";
-import { Loader2 } from "lucide-react";
 
 import { Input } from "@/components/ui/input";
 import { useNewTripContext } from "@/app/new-trip/NewTripContext";
+import Spinner from "@/app/components/Spinner";
 
 const libraries: Libraries = ["places"];
 
@@ -42,7 +42,7 @@ const AutoCompleteInput: React.FC = () => {
     <>
       {!isLoaded ? (
         <div className="w-full flex justify-center mb-1">
-          <Loader2 className="h-8 w-8 animate-spin text-green-600" />
+          <Spinner />
         </div>
       ) : (
         <div className="flex flex-col gap-y-1">
