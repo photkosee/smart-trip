@@ -11,13 +11,17 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
 
-interface DialogProps {
+interface LoginDialogProps {
   open: boolean;
   setOpen: Dispatch<React.SetStateAction<boolean>>;
+  callback?: () => void;
 }
 
-const LoginDialog = ({ open, setOpen }: DialogProps) => {
+const LoginDialog = ({ open, setOpen, callback }: LoginDialogProps) => {
+  const { toast } = useToast();
+
   const getUserInfo = async (token: string) => {
     try {
       const response = await fetch(
@@ -33,12 +37,22 @@ const LoginDialog = ({ open, setOpen }: DialogProps) => {
       const data = await response.json();
       if (response.ok) {
         localStorage.setItem("user", JSON.stringify(data));
+        if (callback) {
+          callback();
+        }
       } else {
-        // Put an alert
-        console.log("error");
+        toast({
+          variant: "destructive",
+          title: "Uh oh! Something went wrong.",
+          description: data.error.message,
+        });
       }
     } catch (error) {
-      console.error("Error:", error);
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: error as string,
+      });
     }
   };
 

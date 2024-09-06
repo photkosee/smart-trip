@@ -2,28 +2,33 @@ import { LiaUserFriendsSolid } from "react-icons/lia";
 import { GiLovers } from "react-icons/gi";
 import { MdFamilyRestroom } from "react-icons/md";
 
+import { CompanionsType } from "@/app/types";
 import { Button } from "@/components/ui/button";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { useNewTripContext } from "@/app/new-trip/NewTripContext";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import {
+  setCompanions,
+  setPeopleCount,
+} from "@/lib/features/newTrip/newTripSlice";
 
 const PeoplePicker = () => {
-  const { peopleCount, setPeopleCount, companions, setCompanions } =
-    useNewTripContext();
+  const dispatch = useAppDispatch();
+  const { peopleCount, companions } = useAppSelector((state) => state.newTrip);
 
   const increment = () => {
     if ((peopleCount === 2 && companions === "couple") || peopleCount === 1) {
-      setCompanions("family");
+      dispatch(setCompanions("family"));
     }
 
-    setPeopleCount(peopleCount + 1);
+    dispatch(setPeopleCount(peopleCount + 1));
   };
 
   const decrement = () => {
     if (peopleCount === 1) return;
     if (peopleCount === 2) {
-      setCompanions("solo");
+      dispatch(setCompanions("solo"));
     }
-    setPeopleCount(peopleCount - 1);
+    dispatch(setPeopleCount(peopleCount - 1));
   };
 
   return (
@@ -71,7 +76,9 @@ const PeoplePicker = () => {
             type="single"
             className="w-full flex"
             value={companions}
-            onValueChange={setCompanions}
+            onValueChange={(value: CompanionsType) =>
+              dispatch(setCompanions(value))
+            }
           >
             {peopleCount < 3 ? (
               <ToggleGroupItem

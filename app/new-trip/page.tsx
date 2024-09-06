@@ -1,29 +1,38 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
+import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
-import { useNewTripContext } from "@/app/new-trip/NewTripContext";
 import AutoCompleteInput from "@/app/new-trip/components/AutoCompleteInput";
 import BudgetPicker from "@/app/new-trip/components/BudgetPicker";
 import DatePickerWithRange from "@/app/new-trip/components/DatePickerWithRange";
 import PeoplePicker from "@/app/new-trip/components/PeoplePicker";
 import LoginDialog from "@/app/components/LoginDialog";
+import LoadingDialog from "./components/LoadingDialog";
+import { useAppSelector } from "@/lib/hooks";
 
 const NewTripPage = () => {
-  const { place, dayCount, budget, peopleCount, companions } =
-    useNewTripContext();
+  const router = useRouter();
+  const { place, dayCount, budget, peopleCount, companions } = useAppSelector(
+    (state) => state.newTrip
+  );
   const [open, setOpen] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const { toast } = useToast();
 
   const generateTrip = async () => {
     const budgetToString =
       budget === 0 ? "cheap" : budget === 1 ? "mid" : "high";
+    const user = JSON.parse(localStorage.getItem("user")!);
 
-    setOpen(true);
-    return;
+    if (!user) {
+      setOpen(true);
+      return;
+    }
 
-    // check login first
-
+    setLoading(true);
     try {
       const response = await fetch("/api/generate-trip", {
         method: "POST",
@@ -36,27 +45,36 @@ const NewTripPage = () => {
           budget: budgetToString,
           peopleCount,
           companions,
+          email: user.email,
         }),
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        // Need to store the data
-        console.log(data);
+        router.push(`/dashboard/${data.id}`);
       } else {
-        // Put an alert
-        console.log("error");
+        toast({
+          variant: "destructive",
+          title: "Uh oh! Something went wrong.",
+          description: "There was a problem with your request.",
+        });
       }
     } catch (error) {
-      console.error("Error:", error);
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: error as string,
+      });
     }
+
+    setLoading(false);
   };
 
   return (
     <main
       className="flex min-h-[80vh] flex-col items-center justify-between
-      pt-7 pb-[180px] bg-white"
+      pt-9 pb-[180px] bg-white"
     >
       <div className="container max-w-xl flex flex-col gap-y-10 px-5 text-lg">
         <h2 className="text-xl lg:text-3xl text-center">
@@ -78,15 +96,21 @@ const NewTripPage = () => {
 
         <Button
           className="px-7 py-6 rounded-full bg-green-800 hover:bg-green-700
-          text-lg mx-auto"
-          onClick={() => setOpen(true)}
-          disabled={!place || !dayCount}
+          text-lg mx-auto mt-7"
+          onClick={() => generateTrip()}
+          disabled={!place || !dayCount || loading}
         >
           Plan my trip
         </Button>
       </div>
 
-      <LoginDialog open={open} setOpen={setOpen} />
+      <LoginDialog
+        open={open}
+        setOpen={setOpen}
+        callback={() => generateTrip()}
+      />
+
+      <LoadingDialog open={loading} />
     </main>
   );
 };

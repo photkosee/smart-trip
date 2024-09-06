@@ -3,8 +3,10 @@ import { Inter } from "next/font/google";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 
 import "@/app/globals.css";
+import { Toaster } from "@/components/ui/toaster";
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
+import StoreProvider from "@/app/StoreProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,13 +24,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <GoogleOAuthProvider
-          clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!}
-        >
-          <Header />
-          {children}
-          <Footer />
-        </GoogleOAuthProvider>
+        <StoreProvider>
+          <GoogleOAuthProvider
+            clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!}
+          >
+            <Header />
+            {children}
+            <Footer />
+          </GoogleOAuthProvider>
+        </StoreProvider>
+        <Toaster />
       </body>
     </html>
   );

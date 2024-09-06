@@ -6,12 +6,14 @@ import { FaRegCircleXmark } from "react-icons/fa6";
 import { Loader2 } from "lucide-react";
 
 import { Input } from "@/components/ui/input";
-import { useNewTripContext } from "@/app/new-trip/NewTripContext";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { setPlace } from "@/lib/features/newTrip/newTripSlice";
 
 const libraries: Libraries = ["places"];
 
 const AutoCompleteInput: React.FC = () => {
-  const { place, setPlace } = useNewTripContext();
+  const dispatch = useAppDispatch();
+  const place = useAppSelector((state) => state.newTrip.place);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_PLACE_API!,
@@ -32,11 +34,11 @@ const AutoCompleteInput: React.FC = () => {
       autocomplete.addListener("place_changed", () => {
         const completePlace = autocomplete.getPlace();
         if (completePlace.formatted_address) {
-          setPlace(completePlace.formatted_address);
+          dispatch(setPlace(completePlace.formatted_address));
         }
       });
     }
-  }, [isLoaded, loadError, setPlace]);
+  }, [isLoaded, loadError]);
 
   return (
     <>
@@ -51,7 +53,7 @@ const AutoCompleteInput: React.FC = () => {
             type="text"
             placeholder="Select a city or country"
             value={place}
-            onChange={(e) => setPlace(e.target.value)}
+            onChange={(e) => dispatch(setPlace(e.target.value))}
             className={`${place.length < 1 && "ring-1 ring-red-500"}`}
           />
 

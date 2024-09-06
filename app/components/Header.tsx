@@ -1,11 +1,11 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import LoginDialog from "./LoginDialog";
+import LoginDialog from "@/app/components/LoginDialog";
 
 const Header = () => {
   const [top, setTop] = useState<boolean>(false);
@@ -21,15 +21,13 @@ const Header = () => {
     return () => window.removeEventListener("scroll", scrollYPosition);
   }, []);
 
-  const googleLogin = () => {};
-
   return (
     <header
       className={`sticky py-3 sm:p-4 top-0 z-30 transition-all w-full flex ${
         top && "bg-white shadow-lg"
       }`}
     >
-      <div className="container max-w-6xl mx-auto px-5">
+      <div className="container max-w-6xl mx-auto px-2 sm:px-5">
         <div className="flex justify-between items-center gap-x-6 mx-auto">
           <Link href="/">
             <Image
@@ -38,12 +36,12 @@ const Header = () => {
               width={0}
               height={0}
               priority
-              className="w-auto h-[50px]"
+              className="w-auto h-[40px] sm:h-[50px]"
             />
           </Link>
           <Button
             variant={!top ? "default" : "outline"}
-            className="self-center rounded-full"
+            className="self-center rounded-full mr-3"
             onClick={() => setOpen(true)}
           >
             Sign In

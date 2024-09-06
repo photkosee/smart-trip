@@ -14,16 +14,18 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { useNewTripContext } from "@/app/new-trip/NewTripContext";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { setDayCount } from "@/lib/features/newTrip/newTripSlice";
 
 const DatePickerWithRange = ({
   className,
 }: React.HTMLAttributes<HTMLDivElement>) => {
+  const dispatch = useAppDispatch();
+  const dayCount = useAppSelector((state) => state.newTrip.dayCount);
   const [date, setDate] = React.useState<DateRange | undefined>({
     from: new Date(),
     to: new Date(),
   });
-  const { dayCount, setDayCount } = useNewTripContext();
 
   const handleSelect = (range: DateRange | undefined) => {
     if (range?.from && range.to) {
@@ -34,15 +36,15 @@ const DatePickerWithRange = ({
       // Ensure the range is no longer than 5 days
       if (calculatedDayCount > 5) {
         range.to = addDays(range.from, 4); // Set the maximum range to 5 days
-        setDayCount(5);
+        dispatch(setDayCount(5));
       } else {
-        setDayCount(calculatedDayCount);
+        dispatch(setDayCount(calculatedDayCount));
       }
     } else if (range?.from) {
-      setDayCount(1);
+      dispatch(setDayCount(1));
     } else {
       // If both dates are cleared, set dayCount to 0
-      setDayCount(0);
+      dispatch(setDayCount(0));
     }
 
     setDate(range);

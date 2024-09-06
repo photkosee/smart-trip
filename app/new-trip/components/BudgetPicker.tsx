@@ -1,8 +1,10 @@
 import { Slider } from "@/components/ui/slider";
-import { useNewTripContext } from "@/app/new-trip/NewTripContext";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { setBudget } from "@/lib/features/newTrip/newTripSlice";
 
 const BudgetPicker = () => {
-  const { budget, setBudget } = useNewTripContext();
+  const dispatch = useAppDispatch();
+  const budget = useAppSelector((state) => state.newTrip.budget);
 
   return (
     <div className="flex flex-col gap-y-5">
@@ -11,24 +13,24 @@ const BudgetPicker = () => {
         max={2}
         step={1}
         className="text-lime-200"
-        onValueChange={(value) => setBudget(value[0])}
+        onValueChange={(value) => dispatch(setBudget(value[0]))}
       />
       <div className="flex justify-between w-full">
         <button
           className="flex-1 flex justify-start"
-          onClick={() => setBudget(0)}
+          onClick={() => dispatch(setBudget(0))}
         >
           Cheap
         </button>
         <button
           className="flex-1 flex justify-center"
-          onClick={() => setBudget(1)}
+          onClick={() => dispatch(setBudget(1))}
         >
           Mid
         </button>
         <button
           className="flex-1 flex justify-end"
-          onClick={() => setBudget(2)}
+          onClick={() => dispatch(setBudget(2))}
         >
           High
         </button>
