@@ -43,7 +43,8 @@ const AuthTab = ({ picture }: AuthTabProps) => {
             alt="User Image"
             width={0}
             height={0}
-            className="size-[45px] rounded-full cursor-pointer border border-black"
+            className="size-[45px] rounded-full cursor-pointer border
+            border-gray-300"
             priority
             unoptimized
           />
