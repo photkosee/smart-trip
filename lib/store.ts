@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 
 import newTripReducer from "@/lib/features/newTrip/newTripSlice";
+import authReducer from "@/lib/features/auth/authSlice";
 
 export const makeStore = () => {
   return configureStore({
     reducer: {
       newTrip: newTripReducer,
+      auth: authReducer,
     },
   });
 };

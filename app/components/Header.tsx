@@ -1,15 +1,27 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { googleLogout } from "@react-oauth/google";
 
 import { Button } from "@/components/ui/button";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import LoginDialog from "@/app/components/LoginDialog";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { authLogout } from "@/lib/features/auth/authSlice";
 
 const Header = () => {
+  const router = useRouter();
+  const dispatch = useAppDispatch();
   const [top, setTop] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
+  const { id, picture } = useAppSelector((state) => state.auth);
 
   useEffect(() => {
     // Whether the current scroll position is at the top of the page
@@ -20,6 +32,12 @@ const Header = () => {
 
     return () => window.removeEventListener("scroll", scrollYPosition);
   }, []);
+
+  const handleLogout = () => {
+    googleLogout();
+    dispatch(authLogout());
+    router.push("/");
+  };
 
   return (
     <header
@@ -39,17 +57,48 @@ const Header = () => {
               className="w-auto h-[40px] sm:h-[50px]"
             />
           </Link>
-          <Button
-            variant={!top ? "default" : "outline"}
-            className="self-center rounded-full mr-3"
-            onClick={() => setOpen(true)}
-          >
-            Sign In
-          </Button>
+
+          {id ? (
+            <div className="flex items-center gap-x-3 mr-3">
+              <Popover>
+                <PopoverTrigger>
+                  <img
+                    src={picture ? picture : ""}
+                    alt="User Image"
+                    className="size-[45px] rounded-full cursor-pointer"
+                  />
+                </PopoverTrigger>
+                <PopoverContent>
+                  <div
+                    onClick={handleLogout}
+                    className="text-center hover:bg-gray-50 py-2 rounded-lg
+                    cursor-pointer"
+                  >
+                    Sign Out
+                  </div>
+                </PopoverContent>
+              </Popover>
+            </div>
+          ) : (
+            <Button
+              variant={!top ? "default" : "outline"}
+              className="self-center rounded-full mr-3"
+              onClick={() => setOpen(true)}
+            >
+              Sign In
+            </Button>
+          )}
         </div>
       </div>
 
-      <LoginDialog open={open} setOpen={setOpen} />
+      <LoginDialog
+        open={open}
+        setOpen={setOpen}
+        callback={() => {
+          router.push("/dashboard");
+          setOpen(false);
+        }}
+      />
     </header>
   );
 };

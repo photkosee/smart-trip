@@ -12,6 +12,8 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
+import { useAppDispatch } from "@/lib/hooks";
+import { authLogin } from "@/lib/features/auth/authSlice";
 
 interface LoginDialogProps {
   open: boolean;
@@ -21,6 +23,7 @@ interface LoginDialogProps {
 
 const LoginDialog = ({ open, setOpen, callback }: LoginDialogProps) => {
   const { toast } = useToast();
+  const dispatch = useAppDispatch();
 
   const getUserInfo = async (token: string) => {
     try {
@@ -37,6 +40,7 @@ const LoginDialog = ({ open, setOpen, callback }: LoginDialogProps) => {
       const data = await response.json();
       if (response.ok) {
         localStorage.setItem("user", JSON.stringify(data));
+        dispatch(authLogin(data));
         if (callback) {
           callback();
         }
@@ -56,13 +60,16 @@ const LoginDialog = ({ open, setOpen, callback }: LoginDialogProps) => {
     }
   };
 
-  const login = useGoogleLogin({
+  const handleLogin = useGoogleLogin({
     onSuccess: (codeResponse) => {
-      console.log(codeResponse);
       getUserInfo(codeResponse.access_token);
     },
     onError: (error) => {
-      console.log("Login Failed:", error);
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: error as string,
+      });
     },
   });
 
@@ -84,7 +91,7 @@ const LoginDialog = ({ open, setOpen, callback }: LoginDialogProps) => {
               <p>Sign in to continue</p>
               <Button
                 variant={"outline"}
-                onClick={() => login()}
+                onClick={() => handleLogin()}
                 className="gap-x-2"
               >
                 <FcGoogle className="w-6 h-6" />
