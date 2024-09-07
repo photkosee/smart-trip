@@ -18,6 +18,7 @@ const NewTripPage = () => {
   const { place, dayCount, budget, peopleCount, companions } = useAppSelector(
     (state) => state.newTrip
   );
+  const { email } = useAppSelector((state) => state.auth);
   const [open, setOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const { toast } = useToast();
@@ -25,9 +26,8 @@ const NewTripPage = () => {
   const generateTrip = async () => {
     const budgetToString =
       budget === 0 ? "cheap" : budget === 1 ? "mid" : "high";
-    const user = JSON.parse(localStorage.getItem("user")!);
 
-    if (!user) {
+    if (!email) {
       setOpen(true);
       return;
     }
@@ -45,7 +45,7 @@ const NewTripPage = () => {
           budget: budgetToString,
           peopleCount,
           companions,
-          email: user.email,
+          email,
         }),
       });
 
@@ -59,6 +59,7 @@ const NewTripPage = () => {
           title: "Uh oh! Something went wrong.",
           description: "There was a problem with your request.",
         });
+        setLoading(false);
       }
     } catch (error) {
       toast({
@@ -66,9 +67,8 @@ const NewTripPage = () => {
         title: "Uh oh! Something went wrong.",
         description: error as string,
       });
+      setLoading(false);
     }
-
-    setLoading(false);
   };
 
   return (
