@@ -8,6 +8,8 @@ import { Loader2 } from "lucide-react";
 import { db } from "@/app/firebase";
 import { useToast } from "@/hooks/use-toast";
 import HeroSection from "@/app/dashboard/[tripId]/components/HeroSection";
+import HotelSection from "@/app/dashboard/[tripId]/components/HotelSection";
+import PlanSection from "@/app/dashboard/[tripId]/components/PlanSection";
 
 const TripPage = () => {
   const { tripId } = useParams();
@@ -51,6 +53,8 @@ const TripPage = () => {
       {!loading && !notFound ? (
         <>
           <HeroSection trip={trip} />
+          <HotelSection trip={trip} />
+          <PlanSection trip={trip} />
         </>
       ) : null}
     </main>

@@ -1,18 +1,45 @@
 import Image from "next/image";
-import { DocumentData } from "firebase/firestore";
-import { Calendar, MapPin, PersonStanding } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { deleteDoc, doc, DocumentData } from "firebase/firestore";
+import { Calendar, MapPin, PersonStanding, Trash2 } from "lucide-react";
 
-import DisplayedBudget from "@/app/dashboard/components/DisplayedBudget";
+import { db } from "@/app/firebase";
+import { fetchImage } from "@/app/action";
+import { Button } from "@/components/ui/button";
+import { toast } from "@/hooks/use-toast";
+import DisplayedBudget from "@/app/dashboard/[tripId]/components/DisplayedBudget";
 
 interface HeroSectionProps {
   trip?: DocumentData;
 }
 
 const HeroSection = ({ trip }: HeroSectionProps) => {
+  const route = useRouter();
+  const [image, setImage] = useState<string>("");
   const place = trip?.userPreferences?.place;
   const budget = trip?.userPreferences?.budget;
   const dayCount = trip?.userPreferences?.dayCount;
   const peopleCount = trip?.userPreferences?.peopleCount;
+
+  useEffect(() => {
+    trip &&
+      fetchImage(
+        {
+          textQuery: trip?.userPreferences?.place,
+        },
+        setImage
+      );
+  }, [trip]);
+
+  const handleDeleteTrip = async () => {
+    await deleteDoc(doc(db, "Trips", trip?.id as string));
+    route.push("/dashboard");
+    toast({
+      title: "Trip Deleted",
+      description: "Your trip has been deleted",
+    });
+  };
 
   return (
     <section
@@ -46,9 +73,7 @@ const HeroSection = ({ trip }: HeroSectionProps) => {
             {dayCount} day{dayCount > 1 ? "s" : ""}
           </div>
 
-          {trip?.userPreferences?.budget ? (
-            <DisplayedBudget budget={budget} />
-          ) : null}
+          {budget ? <DisplayedBudget budget={budget} /> : null}
 
           {peopleCount ? (
             <div
@@ -61,17 +86,26 @@ const HeroSection = ({ trip }: HeroSectionProps) => {
               ))}
             </div>
           ) : null}
+
+          <Button
+            className="w-full p-5 rounded-full bg-red-700 hover:bg-red-600
+            text-md gap-x-2"
+            onClick={handleDeleteTrip}
+          >
+            <Trash2 className="size-4" />
+            Delete Trip
+          </Button>
         </div>
       </div>
 
       <Image
-        src="/placeholder.svg"
+        src={image ? image : "/placeholder.svg"}
         alt="Hero image"
-        priority
-        width={1080}
-        height={1080}
-        className="h-[40vh] lg:h-[50vh] object-cover mx-auto w-auto
-        order-1 md:order-2"
+        width={0}
+        height={0}
+        unoptimized
+        className="w-full max-w-[400px] lg:max-w-[500px] h-auto max-h-[350px]
+        mx-auto order-1 md:order-2 rounded-xl object-cover"
       />
     </section>
   );
