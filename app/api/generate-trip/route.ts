@@ -10,11 +10,11 @@ export async function POST(req: Request) {
     const { place, dayCount, companions, peopleCount, budget, email } = data;
 
     const prompt = process.env.NEXT_PUBLIC_AI_PROMPT!
-      .replace("$PLACE", place)
-      .replace("$DAYCOUNT", dayCount.toString())
-      .replace("$COMPANIONS", companions)
-      .replace("$PEOPLECOUNT", peopleCount.toString())
-      .replace("$BUDGET", budget.toString());
+      .replace("{PLACE}", place)
+      .replace("{DAYCOUNT}", dayCount.toString())
+      .replace("{COMPANIONS}", companions)
+      .replace("{PEOPLECOUNT}", peopleCount.toString())
+      .replace("{BUDGET}", budget.toString());
 
     const genAI = new GoogleGenerativeAI(process.env.NEXT_PUBLIC_GOOGLE_AI_API!);
     const model = genAI.getGenerativeModel({
