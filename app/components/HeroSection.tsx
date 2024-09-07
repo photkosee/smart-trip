@@ -10,7 +10,10 @@ const HeroSection = () => {
       className="w-full flex flex-col md:flex-row-reverse items-center gap-y-7 max-w-4xl
       mx-auto bg-white text-black px-5 md:px-7 md:gap-x-5 md:justify-center"
     >
-      <div className="flex flex-col items-center md:items-start mx-auto gap-y-7 lg:max-w-xl">
+      <div
+        className="flex flex-col items-center md:items-start mx-auto gap-y-7
+        lg:max-w-xl w-full max-w-[400px]"
+      >
         <h1
           className="w-full text-center md:text-start font-extrabold
           text-4xl lg:text-5xl 2xl:text-6xl"
@@ -42,7 +45,7 @@ const HeroSection = () => {
 
       <Image
         src="/hero-banner.svg"
-        alt="Trip Illustration"
+        alt="Hero Banner"
         priority
         width={1080}
         height={1080}
