@@ -4,21 +4,14 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { googleLogout } from "@react-oauth/google";
 
 import { Button } from "@/components/ui/button";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 import LoginDialog from "@/app/components/LoginDialog";
-import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { authLogout } from "@/lib/features/auth/authSlice";
+import { useAppSelector } from "@/lib/hooks";
+import AuthTab from "./AuthTab";
 
 const Header = () => {
   const router = useRouter();
-  const dispatch = useAppDispatch();
   const [top, setTop] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
   const { id, picture } = useAppSelector((state) => state.auth);
@@ -32,12 +25,6 @@ const Header = () => {
 
     return () => window.removeEventListener("scroll", scrollYPosition);
   }, []);
-
-  const handleLogout = () => {
-    googleLogout();
-    dispatch(authLogout());
-    router.push("/");
-  };
 
   return (
     <header
@@ -59,26 +46,7 @@ const Header = () => {
           </Link>
 
           {id ? (
-            <div className="flex items-center gap-x-3 mr-3">
-              <Popover>
-                <PopoverTrigger>
-                  <img
-                    src={picture ? picture : ""}
-                    alt="User Image"
-                    className="size-[45px] rounded-full cursor-pointer"
-                  />
-                </PopoverTrigger>
-                <PopoverContent>
-                  <div
-                    onClick={handleLogout}
-                    className="text-center hover:bg-gray-50 py-2 rounded-lg
-                    cursor-pointer"
-                  >
-                    Sign Out
-                  </div>
-                </PopoverContent>
-              </Popover>
-            </div>
+            <AuthTab picture={picture || ""} />
           ) : (
             <Button
               variant={!top ? "default" : "outline"}
