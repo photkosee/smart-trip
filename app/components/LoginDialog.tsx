@@ -39,7 +39,6 @@ const LoginDialog = ({ open, setOpen, callback }: LoginDialogProps) => {
 
       const data = await response.json();
       if (response.ok) {
-        localStorage.setItem("user", JSON.stringify(data));
         dispatch(authLogin(data));
         if (callback) {
           callback();
@@ -73,6 +72,23 @@ const LoginDialog = ({ open, setOpen, callback }: LoginDialogProps) => {
     },
   });
 
+  const handleLoginDemo = () => {
+    const user = {
+      id: "demo",
+      name: "Demo User",
+      email: "demo@example.com",
+      verified_email: true,
+      given_name: "Demo",
+      family_name: "User",
+      picture: "",
+    };
+
+    dispatch(authLogin(user));
+    if (callback) {
+      callback();
+    }
+  };
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="sm:max-w-[425px]">
@@ -96,6 +112,10 @@ const LoginDialog = ({ open, setOpen, callback }: LoginDialogProps) => {
               >
                 <FcGoogle className="w-6 h-6" />
                 Sign In with Google
+              </Button>
+
+              <Button variant={"outline"} onClick={() => handleLoginDemo()}>
+                Try Demo
               </Button>
             </div>
           </DialogDescription>

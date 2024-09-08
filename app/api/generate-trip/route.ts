@@ -67,7 +67,6 @@ export async function POST(req: Request) {
 
       return NextResponse.json({ id: docId }, { status: 200 });
     } catch (error) {
-      console.log("resent\n");
       try {
         // Send the prompt to the AI to fix if the output is not valid JSON
         const result2 = await chatSession.sendMessage(
@@ -85,12 +84,10 @@ export async function POST(req: Request) {
 
         return NextResponse.json({ id: docId }, { status: 200 });
       } catch (error) {
-        console.error("Error occurred2:", error);
         return NextResponse.json({ error: error }, { status: 500 });
       }
     }
   } catch (error) {
-    console.error("Error occurred1:", error);
     return NextResponse.json({ error: error }, { status: 500 });
   }
 };
