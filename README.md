@@ -54,7 +54,7 @@ At first, I implemented a context for tracking the form data when creating a new
 ### Zustand vs Redux
 The first global state management tool I ever used was Redux. Later, I tried Zustand in the last few projects, and I realized how much simpler Zustand is compared to Redux. The amount of work and code required to set up and use Redux is quite tedious compared to Zustand. I haven’t had the chance to work on a large-large production project yet, so Redux might be better in that scenario. However, so far, I would give a plus to Zustand since I haven’t encountered any use cases where Redux offers something that Zustand cannot.
 
-### Funny mistakes
+### Funny Mistakes
 - I spent quite some time figuring out what went wrong with the way I connected to Gemini AI, as I had made it work before when using React. The issue was simple: the environment variable wasn’t being fetched because I added it to the wrong file and used the wrong naming format. I typically add a `.env` file myself, but Next.js already has its own `.env.local` file. Additionally, environment variables should have the `NEXT_PUBLIC_` prefix. Switching between different frameworks can make it easy to overlook small details like these.
 - Suddenly, the way every page was rendered looked different from usual—every element seemed compressed. I thought I had added something strange to the layout but couldn’t find the cause, as everything looked normal in inspection mode. In the end, it turned out I had accidentally zoomed out the page, and it was easily fixed by zooming back in.
 
@@ -63,3 +63,6 @@ Once I tried to implement an authentication slice that retrieves data from `loca
 
 ### Image Component from Next.js
 Next.js has its own way to optimize images for performance by lazy loading and automatically resizing images based on device size. However, this native component doesn't seem to work properly when loading images from a third party, such as Google Place Photos in this case. It only works if you set the `unoptimized` prop, but then what's the point of using this image component if it cannot perform its intended function? It does work fine with static images.
+
+### Some Problems after deployment
+- Sometimes, I encounter a 504 error when trying to create a new plan, but no meaningful errors are shown. Initially, I thought the issue was due to Gemini occasionally responding with an invalid JSON format, causing an error. It took me a while to figure out that the cause was actually out of my control. With Vercel’s free plan for site deployment, there’s a limited time for backend requests, which is why I only experience the error when a request takes too long. I can think of two solutions: upgrade the plan, or move the logic to the frontend since the part involving chatting with Gemini can be handled there (although this isn’t recommended). Oh, or hosting the backend elsewhere.

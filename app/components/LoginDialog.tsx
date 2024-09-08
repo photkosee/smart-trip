@@ -76,7 +76,7 @@ const LoginDialog = ({ open, setOpen, callback }: LoginDialogProps) => {
     const user = {
       id: "demo",
       name: "Demo User",
-      email: "demo@example.com",
+      email: Math.random().toString(36).substring(2, 8) + "@example.com",
       verified_email: true,
       given_name: "Demo",
       family_name: "User",

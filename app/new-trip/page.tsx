@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import AutoCompleteInput from "@/app/new-trip/components/AutoCompleteInput";
 import BudgetPicker from "@/app/new-trip/components/BudgetPicker";
@@ -12,6 +11,7 @@ import PeoplePicker from "@/app/new-trip/components/PeoplePicker";
 import LoginDialog from "@/app/components/LoginDialog";
 import LoadingDialog from "@/app/new-trip/components/LoadingDialog";
 import { useAppSelector } from "@/lib/hooks";
+import { geminiGenerateTrip } from "../action";
 
 const NewTripPage = () => {
   const router = useRouter();
@@ -21,7 +21,6 @@ const NewTripPage = () => {
   const { email } = useAppSelector((state) => state.auth);
   const [open, setOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
-  const { toast } = useToast();
 
   const generateTrip = async () => {
     const budgetToString =
@@ -29,42 +28,21 @@ const NewTripPage = () => {
     const currUser = JSON.parse(localStorage.getItem("user")!);
 
     setLoading(true);
-    try {
-      const response = await fetch("/api/generate-trip", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          place,
-          dayCount,
-          budget: budgetToString,
-          peopleCount,
-          companions,
-          email: currUser?.email,
-        }),
-      });
 
-      const data = await response.json();
+    const docId = await geminiGenerateTrip({
+      place,
+      dayCount,
+      companions,
+      peopleCount,
+      budget: budgetToString,
+      email: currUser?.email,
+    });
 
-      if (response.ok) {
-        router.push(`/dashboard/${data.id}`);
-      } else {
-        toast({
-          variant: "destructive",
-          title: "Uh oh! Something went wrong.",
-          description: "There was a problem with your request.",
-        });
-        setLoading(false);
-      }
-    } catch (error) {
-      toast({
-        variant: "destructive",
-        title: "Uh oh! Something went wrong.",
-        description: error as string,
-      });
-      setLoading(false);
+    if (docId) {
+      router.push(`/dashboard/${docId}`);
     }
+
+    setLoading(false);
   };
 
   const handlePlanTrip = () => {
