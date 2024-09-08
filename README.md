@@ -4,15 +4,37 @@
 
 ## Table of Contents
 - [What this does](#what-this-does)
+- [GIF Demonstration](#gif-demonstration)
+- [Note](#note)
 - [Built With](#built-with)
 - [Author](#author)
 - [Deployment](#deployment)
-- [Note](#note)
 - [Reflection](#reflection)
 
 ## What this does?
 
 Utilizing Gemini AI to provide users with their ideal travel plan for any destination around the world based on their preferences.
+
+## GIF Demonstration
+
+### Landing page
+![smart-trip1](https://github.com/user-attachments/assets/ac347a37-80ad-490e-b0bd-ab3ad2afa797)
+
+### Create a new plan flow
+![smart-trip2](https://github.com/user-attachments/assets/c64b91ce-61ea-4ddb-8408-5aedec3f00aa)
+
+### Dashboad page & Plan page
+![smart-trip3](https://github.com/user-attachments/assets/5308f665-68be-4cd5-ba22-b32d0d81eb41)
+
+![smart-trip4](https://github.com/user-attachments/assets/88645913-8680-4f6e-b3bb-481de9b7b33d)
+
+## Note
+
+I was using the Google Places API carelessly, and suddenly, the bill surpassed $200 in no time while I was testing it. Luckily, Google Cloud Platform provides $200 in free credits monthly for that service, but that was too much for just my testing alone. The main elements I used the Google Places API for were an autocomplete component for location names when users input their preferences, and another for fetching images from Place Photos. The bulk of the cost, almost 99% of the budget, came from Place Photos with the Places API (New).
+
+I needed to fetch images from Place Photos because the image URLs provided by Gemini were mostly non-functional. The mistake I made was fetching images for every plan and trip using the `useEffect` hook, causing the images to be fetched again whenever those components were re-rendered. I don't think caching would help in this case, since the billing is based on when the images are rendered (charged per pixel, tracked through the API key that's required in the image URL).
+
+So, I decided to disable that part for now and use placeholders for those images instead. It was a valuable learning experience (and costly, haha).
 
 ## Built With
 - Next.js
@@ -34,14 +56,6 @@ Phot Koseekrainiramon
 This project is deployed to Vercel:
 
 https://smart-trip-alpha.vercel.app/
-
-## Note
-
-I was using the Google Places API carelessly, and suddenly, the bill surpassed $200 in no time while I was testing it. Luckily, Google Cloud Platform provides $200 in free credits monthly, but that was too much for just my testing alone. The main elements I used the Google Places API for were an autocomplete component for location names when users input their preferences, and another for fetching images from Place Photos. The bulk of the cost, almost 99% of the budget, came from Place Photos with the Places API (New).
-
-I needed to fetch images from Place Photos because the image URLs provided by Gemini were mostly non-functional. The mistake I made was fetching images for every plan and trip using the `useEffect` hook, causing the images to be fetched again whenever those components were re-rendered. I don't think caching would help in this case, since the billing is based on when the images are rendered (charged per pixel, tracked through the API key that's required in the image URL).
-
-So, I decided to disable that part for now and use placeholders for those images instead. It was a valuable learning experience, but it's not ideal to spend that much budget just to host a personal project.
 
 ## Reflection
 
