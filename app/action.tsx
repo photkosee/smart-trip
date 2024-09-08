@@ -9,16 +9,13 @@ export const fetchImage = async (
   data: { textQuery: string },
   setImage: React.Dispatch<React.SetStateAction<string>>
 ) => {
+  // fetching a list of photos by given place name from Places API Search Text
   await axios
     .post(process.env.NEXT_PUBLIC_GOOGLE_PLACE_BASE_URL!, data, {
       headers: {
         "Content-Type": "application/json",
         "X-Goog-Api-Key": process.env.NEXT_PUBLIC_GOOGLE_PLACE_API!,
-        "X-Goog-FieldMask": [
-          "places.photos",
-          "places.displayName",
-          "places.id",
-        ],
+        "X-Goog-FieldMask": ["places.photos"],
       },
     })
     .then((res) => {
@@ -28,6 +25,8 @@ export const fetchImage = async (
         !res.data.places[0]?.photos[0]?.name
       )
         return;
+
+      // rendering the first photo from the list with Place Photos
       const imageUrl = process.env.NEXT_PUBLIC_GOOGLE_PLACE_PHOTO_REF!.replace(
         "{NAME}",
         res.data.places[0].photos[0].name

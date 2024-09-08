@@ -30,11 +30,11 @@ Utilizing Gemini AI to provide users with their ideal travel plan for any destin
 
 ## Note
 
-I was using the Google Places API carelessly, and suddenly, the bill surpassed $200 in no time while I was testing it. Luckily, Google Cloud Platform provides $200 in free credits monthly for that service, but that was too much for just my testing alone. The main elements I used the Google Places API for were an autocomplete component for location names when users input their preferences, and another for fetching images from Place Photos. The bulk of the cost, almost 99% of the budget, came from Place Photos with the Places API (New).
+I was using the Google Places API carelessly, and suddenly, the bill surpassed $200 in no time while I was testing it. Luckily, Google Cloud Platform provides $200 in free credits monthly for that service, but that was too much for just my testing alone. The main elements I used the Google Places API for were an autocomplete component for location names when users input their preferences, and another for fetching images from Place Photos. The bulk of the cost, almost 99% of the budget, came from Places API Place Photo and (mostly) Text Search.
 
-I needed to fetch images from Place Photos because the image URLs provided by Gemini were mostly non-functional. The mistake I made was fetching images for every plan and trip using the `useEffect` hook, causing the images to be fetched again whenever those components were re-rendered. I don't think caching would help in this case, since the billing is based on when the images are rendered (charged per pixel, tracked through the API key that's required in the image URL).
+Since the image URLs provided by Gemini were mostly non-functional, I had to find another way to render the images. What I did was fetching place information from the Places API Text Search using the given place name, then gather a list of photos from the output to render using the Places Photo API. The mistake I made was fetching images for every plan and trip using the `useEffect` hook, causing the images to be fetched again whenever those components were re-rendered. Caching would be helpful in this case, since it will help reducing the number of request of Places API Text Search. However, it wouldn't reduce the cost from Places Photo since the that one's billing is based on when the images are rendered (charged per pixel, tracked through the API key that's required in the image URL).
 
-So, I decided to disable that part for now and use placeholders for those images instead. It was a valuable learning experience (and costly, haha).
+I ended up disabling that part for now and using placeholders for those images instead. It was a valuable (and costly, haha) learning experience. I'll come up with a better solution without relying too much on Google Cloud Platform services.
 
 ## Built With
 - Next.js
