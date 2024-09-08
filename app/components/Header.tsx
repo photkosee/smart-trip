@@ -5,10 +5,10 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
+import { useAppSelector } from "@/lib/hooks";
 import { Button } from "@/components/ui/button";
 import LoginDialog from "@/app/components/LoginDialog";
-import { useAppSelector } from "@/lib/hooks";
-import AuthTab from "./AuthTab";
+import AuthTab from "@/app/components/AuthTab";
 
 const Header = () => {
   const router = useRouter();
@@ -34,7 +34,7 @@ const Header = () => {
     >
       <div className="container max-w-6xl mx-auto px-2 sm:px-5">
         <div className="flex justify-between items-center gap-x-6 mx-auto">
-          <Link href="/">
+          <Link href={id ? "/dashboard" : "/"}>
             <Image
               src="/logo.svg"
               alt="Logo"

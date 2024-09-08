@@ -38,7 +38,8 @@ const HotelCard = ({ hotel }: HotelCardProps) => {
         width={0}
         height={0}
         unoptimized
-        className="rounded-xl h-[170px] w-[300px] object-cover object-center"
+        className="rounded-xl h-[170px] w-[300px] object-cover object-center
+        border border-gray-100"
       />
 
       <h4 className="font-medium text-lg">{hotel.hotelName}</h4>

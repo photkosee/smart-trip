@@ -3,9 +3,19 @@
 <p align="center"> Create, customize, and optimize your itineraries with this free AI trip planner. <a href="">Currently under development</a></p>
 
 ## Table of Contents
+- [What this does](#what-this-does)
+- [Inspiration](#inspiration)
+- [GIF Demonstration](#gif-demonstration)
 - [Built With](#built-with)
 - [Author](#author)
+- [Deployment](#deployment)
 - [Reflection](#reflection)
+
+## What this does?
+
+## Inspiration
+
+## GIF Demonstration
 
 ## Built With
 - Next.js
@@ -21,6 +31,8 @@
 Phot Koseekrainiramon
 - [LinkedIn](https://www.linkedin.com/in/phot-kosee/)
 - [GitHub](https://github.com/photkosee)
+
+## Deployment
 
 ## Reflection
 
@@ -50,4 +62,4 @@ The first global state management tool I ever used was Redux. Later, I tried Zus
 Once I tried to implement an authentication slice that retrieves data from `localStorage` and uses it in a component, this issue arose. Since `localStorage` cannot be accessed from the server side, it caused a content mismatch between the client and server. The issue can easily be solved by dynamically importing the component using `next/dynamic`, which provides the option to disable server-side rendering. I did this for the `Header` component; however, next time, I'll try working with cookies, as that approach doesn't have this issue. Additionally, having the header render last is not ideal in my opinion.
 
 ### Image Component from Next.js
-Next.js has its own way to optimize images for performance by lazy loading and automatically resizing images based on device size. However, this native component doesn't seem to work properly when loading images from a third party, such as Google Photos in this case. It only works if you set the `unoptimized` prop, but then what's the point of using this image component if it cannot perform its intended function? It does work fine with static images.
+Next.js has its own way to optimize images for performance by lazy loading and automatically resizing images based on device size. However, this native component doesn't seem to work properly when loading images from a third party, such as Google Place Photos in this case. It only works if you set the `unoptimized` prop, but then what's the point of using this image component if it cannot perform its intended function? It does work fine with static images.

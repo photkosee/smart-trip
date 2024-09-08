@@ -10,7 +10,7 @@ import BudgetPicker from "@/app/new-trip/components/BudgetPicker";
 import DatePickerWithRange from "@/app/new-trip/components/DatePickerWithRange";
 import PeoplePicker from "@/app/new-trip/components/PeoplePicker";
 import LoginDialog from "@/app/components/LoginDialog";
-import LoadingDialog from "./components/LoadingDialog";
+import LoadingDialog from "@/app/new-trip/components/LoadingDialog";
 import { useAppSelector } from "@/lib/hooks";
 
 const NewTripPage = () => {
@@ -26,11 +26,7 @@ const NewTripPage = () => {
   const generateTrip = async () => {
     const budgetToString =
       budget === 0 ? "cheap" : budget === 1 ? "mid" : "high";
-
-    if (!email) {
-      setOpen(true);
-      return;
-    }
+    const currUser = JSON.parse(localStorage.getItem("user")!);
 
     setLoading(true);
     try {
@@ -45,7 +41,7 @@ const NewTripPage = () => {
           budget: budgetToString,
           peopleCount,
           companions,
-          email,
+          email: currUser?.email,
         }),
       });
 
@@ -68,6 +64,14 @@ const NewTripPage = () => {
         description: error as string,
       });
       setLoading(false);
+    }
+  };
+
+  const handlePlanTrip = () => {
+    if (!email) {
+      setOpen(true);
+    } else {
+      generateTrip();
     }
   };
 
@@ -97,7 +101,7 @@ const NewTripPage = () => {
         <Button
           className="px-7 py-6 rounded-full bg-green-800 hover:bg-green-700
           text-lg mx-auto mt-7"
-          onClick={() => generateTrip()}
+          onClick={handlePlanTrip}
           disabled={!place || !dayCount || loading}
         >
           Plan my trip

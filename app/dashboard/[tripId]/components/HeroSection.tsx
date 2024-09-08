@@ -59,9 +59,9 @@ const HeroSection = ({ trip }: HeroSectionProps) => {
         <div className="w-full flex flex-col gap-y-3">
           <div
             className="flex items-center gap-x-2 justify-center md:justify-start
-            text-center text-wrap"
+            text-center md:text-start text-wrap"
           >
-            <MapPin />
+            <MapPin className="flex-shrink-0 hidden md:block" />
             {place}
           </div>
 

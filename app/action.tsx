@@ -17,7 +17,11 @@ export const fetchImage = async (
       },
     })
     .then((res) => {
-      if (!res.data.places[0]?.photos || !res.data.places[0]?.photos[0]?.name)
+      if (
+        !res.data.places ||
+        !res.data.places[0]?.photos ||
+        !res.data.places[0]?.photos[0]?.name
+      )
         return;
       const imageUrl = process.env.NEXT_PUBLIC_GOOGLE_PLACE_PHOTO_REF!.replace(
         "{NAME}",

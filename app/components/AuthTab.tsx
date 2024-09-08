@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/popover";
 import { authLogout } from "@/lib/features/auth/authSlice";
 import { useAppDispatch } from "@/lib/hooks";
+import { toast } from "@/hooks/use-toast";
 
 interface AuthTabProps {
   picture?: string;
@@ -23,6 +24,7 @@ const AuthTab = ({ picture }: AuthTabProps) => {
   const handleLogout = () => {
     googleLogout();
     dispatch(authLogout());
+    toast({ title: "Logged out", description: "You have been logged out." });
     router.push("/");
   };
 
