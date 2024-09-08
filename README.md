@@ -1,11 +1,9 @@
-# <p align="center"><a href=""><img width="350" src="./public/logo.png"></a></p>
+# <p align="center"><a href="https://smart-trip-alpha.vercel.app/"><img width="350" src="./public/logo.png"></a></p>
 
-<p align="center"> Create, customize, and optimize your itineraries with this free AI trip planner. <a href="">Currently under development</a></p>
+<p align="center"> Create, customize, and optimize your itineraries with this free AI trip planner. <a href="https://smart-trip-alpha.vercel.app/">Try this out now!</a></p>
 
 ## Table of Contents
 - [What this does](#what-this-does)
-- [Inspiration](#inspiration)
-- [GIF Demonstration](#gif-demonstration)
 - [Built With](#built-with)
 - [Author](#author)
 - [Deployment](#deployment)
@@ -13,9 +11,7 @@
 
 ## What this does?
 
-## Inspiration
-
-## GIF Demonstration
+Utilizing Gemini AI to provide users with their ideal travel plan for any destination around the world based on their preferences.
 
 ## Built With
 - Next.js
@@ -33,6 +29,10 @@ Phot Koseekrainiramon
 - [GitHub](https://github.com/photkosee)
 
 ## Deployment
+
+This project is deployed to Vercel:
+
+https://smart-trip-alpha.vercel.app/
 
 ## Reflection
 
