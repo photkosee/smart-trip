@@ -56,16 +56,41 @@ export async function POST(req: Request) {
 
     // Save the trip data to the database
     const docId = Date.now().toString();
-    await setDoc(doc(db, "Trips", docId), {
-      id: docId,
-      userEmail: email,
-      userPreferences: { place, dayCount, companions, peopleCount, budget},
-      tripData: JSON.parse(output),
-    });
+    try {
+      const tripData = JSON.parse(output);
+      await setDoc(doc(db, "Trips", docId), {
+        id: docId,
+        userEmail: email,
+        userPreferences: { place, dayCount, companions, peopleCount, budget},
+        tripData: tripData,
+      });
 
-    return NextResponse.json({ id: docId }, { status: 200 });
+      return NextResponse.json({ id: docId }, { status: 200 });
+    } catch (error) {
+      console.log("resent\n");
+      try {
+        // Send the prompt to the AI to fix if the output is not valid JSON
+        const result2 = await chatSession.sendMessage(
+          "Fix this output to be in a valid JSON format: " + output
+        );
+        const response2 = result2.response;
+        const output2 = response2.text();
+
+        await setDoc(doc(db, "Trips", docId), {
+          id: docId,
+          userEmail: email,
+          userPreferences: { place, dayCount, companions, peopleCount, budget},
+          tripData: JSON.parse(output2),
+        });
+
+        return NextResponse.json({ id: docId }, { status: 200 });
+      } catch (error) {
+        console.error("Error occurred2:", error);
+        return NextResponse.json({ error: error }, { status: 500 });
+      }
+    }
   } catch (error) {
-    console.error("Error occurred:", error);
+    console.error("Error occurred1:", error);
     return NextResponse.json({ error: error }, { status: 500 });
   }
 };
