@@ -22,15 +22,15 @@ const HeroSection = ({ trip }: HeroSectionProps) => {
   const dayCount = trip?.userPreferences?.dayCount;
   const peopleCount = trip?.userPreferences?.peopleCount;
 
-  useEffect(() => {
-    trip &&
-      fetchImage(
-        {
-          textQuery: trip?.userPreferences?.place,
-        },
-        setImage
-      );
-  }, [trip]);
+  // useEffect(() => {
+  //   trip &&
+  //     fetchImage(
+  //       {
+  //         textQuery: trip?.userPreferences?.place,
+  //       },
+  //       setImage
+  //     );
+  // }, [trip]);
 
   const handleDeleteTrip = async () => {
     await deleteDoc(doc(db, "Trips", trip?.id as string));

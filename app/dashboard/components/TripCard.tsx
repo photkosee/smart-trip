@@ -15,15 +15,15 @@ const TripCard = ({ trip }: TripCardProps) => {
   const dayCount = trip?.userPreferences?.dayCount;
   const placeName = trip?.userPreferences?.place;
 
-  useEffect(() => {
-    trip &&
-      fetchImage(
-        {
-          textQuery: trip.userPreferences?.place,
-        },
-        setImage
-      );
-  }, [trip]);
+  // useEffect(() => {
+  //   trip &&
+  //     fetchImage(
+  //       {
+  //         textQuery: trip.userPreferences?.place,
+  //       },
+  //       setImage
+  //     );
+  // }, [trip]);
 
   return (
     <Link

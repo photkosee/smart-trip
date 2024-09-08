@@ -13,15 +13,15 @@ interface HotelCardProps {
 const HotelCard = ({ hotel }: HotelCardProps) => {
   const [image, setImage] = useState<string>("");
 
-  useEffect(() => {
-    hotel &&
-      fetchImage(
-        {
-          textQuery: hotel.hotelName,
-        },
-        setImage
-      );
-  }, [hotel]);
+  // useEffect(() => {
+  //   hotel &&
+  //     fetchImage(
+  //       {
+  //         textQuery: hotel.hotelName,
+  //       },
+  //       setImage
+  //     );
+  // }, [hotel]);
 
   return (
     <Link

@@ -9,47 +9,47 @@ import { Input } from "@/components/ui/input";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { setPlace } from "@/lib/features/newTrip/newTripSlice";
 
-const libraries: Libraries = ["places"];
+// const libraries: Libraries = ["places"];
 
 const AutoCompleteInput: React.FC = () => {
   const dispatch = useAppDispatch();
   const place = useAppSelector((state) => state.newTrip.place);
-  const inputRef = useRef<HTMLInputElement | null>(null);
-  const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_PLACE_API!,
-    libraries: libraries,
-  });
+  // const inputRef = useRef<HTMLInputElement | null>(null);
+  // const { isLoaded, loadError } = useLoadScript({
+  //   googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_PLACE_API!,
+  //   libraries: libraries,
+  // });
 
-  useEffect(() => {
-    if (!isLoaded || loadError) return;
+  // useEffect(() => {
+  //   if (!isLoaded || loadError) return;
 
-    if (inputRef.current) {
-      const autocomplete = new google.maps.places.Autocomplete(
-        inputRef.current as HTMLInputElement,
-        {
-          types: ["(regions)"], // Restrict to cities and countries
-        }
-      );
+  //   if (inputRef.current) {
+  //     const autocomplete = new google.maps.places.Autocomplete(
+  //       inputRef.current as HTMLInputElement,
+  //       {
+  //         types: ["(regions)"], // Restrict to cities and countries
+  //       }
+  //     );
 
-      autocomplete.addListener("place_changed", () => {
-        const completePlace = autocomplete.getPlace();
-        if (completePlace.formatted_address) {
-          dispatch(setPlace(completePlace.formatted_address));
-        }
-      });
-    }
-  }, [isLoaded, loadError]);
+  //     autocomplete.addListener("place_changed", () => {
+  //       const completePlace = autocomplete.getPlace();
+  //       if (completePlace.formatted_address) {
+  //         dispatch(setPlace(completePlace.formatted_address));
+  //       }
+  //     });
+  //   }
+  // }, [isLoaded, loadError]);
 
   return (
     <>
-      {!isLoaded ? (
+      {false ? (
         <div className="w-full flex justify-center mb-1">
           <Loader2 className="w-8 h-8 animate-spin text-green-800" />
         </div>
       ) : (
         <div className="flex flex-col gap-y-1">
           <Input
-            ref={inputRef}
+            // ref={inputRef}
             type="text"
             placeholder="Select a city or country"
             value={place}

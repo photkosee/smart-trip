@@ -13,15 +13,15 @@ interface PlanCardProps {
 const PlanCard = ({ plan }: PlanCardProps) => {
   const [image, setImage] = useState<string>("");
 
-  useEffect(() => {
-    plan &&
-      fetchImage(
-        {
-          textQuery: plan.placeName,
-        },
-        setImage
-      );
-  }, [plan]);
+  // useEffect(() => {
+  //   plan &&
+  //     fetchImage(
+  //       {
+  //         textQuery: plan.placeName,
+  //       },
+  //       setImage
+  //     );
+  // }, [plan]);
 
   return (
     <Link

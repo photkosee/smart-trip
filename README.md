@@ -7,6 +7,7 @@
 - [Built With](#built-with)
 - [Author](#author)
 - [Deployment](#deployment)
+- [Note](#note)
 - [Reflection](#reflection)
 
 ## What this does?
@@ -33,6 +34,14 @@ Phot Koseekrainiramon
 This project is deployed to Vercel:
 
 https://smart-trip-alpha.vercel.app/
+
+## Note
+
+I was using the Google Places API carelessly, and suddenly, the bill surpassed $200 in no time while I was testing it. Luckily, Google Cloud Platform provides $200 in free credits monthly, but that was too much for just my testing alone. The main elements I used the Google Places API for were an autocomplete component for location names when users input their preferences, and another for fetching images from Place Photos. The bulk of the cost, almost 99% of the budget, came from Place Photos with the Places API (New).
+
+I needed to fetch images from Place Photos because the image URLs provided by Gemini were mostly non-functional. The mistake I made was fetching images for every plan and trip using the `useEffect` hook, causing the images to be fetched again whenever those components were re-rendered. I don't think caching would help in this case, since the billing is based on when the images are rendered (charged per pixel, tracked through the API key that's required in the image URL).
+
+So, I decided to disable that part for now and use placeholders for those images instead. It was a valuable learning experience, but it's not ideal to spend that much budget just to host a personal project.
 
 ## Reflection
 
@@ -64,5 +73,5 @@ Once I tried to implement an authentication slice that retrieves data from `loca
 ### Image Component from Next.js
 Next.js has its own way to optimize images for performance by lazy loading and automatically resizing images based on device size. However, this native component doesn't seem to work properly when loading images from a third party, such as Google Place Photos in this case. It only works if you set the `unoptimized` prop, but then what's the point of using this image component if it cannot perform its intended function? It does work fine with static images.
 
-### Some Problems after deployment
-- Sometimes, I encounter a 504 error when trying to create a new plan, but no meaningful errors are shown. Initially, I thought the issue was due to Gemini occasionally responding with an invalid JSON format, causing an error. It took me a while to figure out that the cause was actually out of my control. With Vercel’s free plan for site deployment, there’s a limited time for backend requests, which is why I only experience the error when a request takes too long. I can think of two solutions: upgrade the plan, or move the logic to the frontend since the part involving chatting with Gemini can be handled there (although this isn’t recommended). Oh, or hosting the backend elsewhere.
+### Some Problems after Deployment
+Sometimes, I encounter a 504 error when trying to create a new plan, but no meaningful errors are shown. Initially, I thought the issue was due to Gemini occasionally responding with an invalid JSON format, causing an error. It took me a while to figure out that the cause was actually out of my control. With Vercel’s free plan for site deployment, there’s a limited time for backend requests, which is why I only experience the error when a request takes too long. I can think of two solutions: upgrade the plan, or move the logic to the frontend since the part involving chatting with Gemini can be handled there (although this isn’t recommended). Oh, or hosting the backend elsewhere.
