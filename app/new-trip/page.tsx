@@ -11,7 +11,7 @@ import PeoplePicker from "@/app/new-trip/components/PeoplePicker";
 import LoginDialog from "@/app/components/LoginDialog";
 import LoadingDialog from "@/app/new-trip/components/LoadingDialog";
 import { useAppSelector } from "@/lib/hooks";
-import { geminiGenerateTrip } from "../action";
+import { geminiGenerateTrip } from "@/app/action";
 
 const NewTripPage = () => {
   const router = useRouter();
@@ -40,9 +40,9 @@ const NewTripPage = () => {
 
     if (docId) {
       router.push(`/dashboard/${docId}`);
+    } else {
+      setLoading(false);
     }
-
-    setLoading(false);
   };
 
   const handlePlanTrip = () => {
