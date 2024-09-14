@@ -99,7 +99,7 @@ const HeroSection = ({ trip }: HeroSectionProps) => {
       </div>
 
       <Image
-        src={image ? image : "/placeholder.svg"}
+        src={image ? image : "/placeholder.jpeg"}
         alt="Hero image"
         width={0}
         height={0}

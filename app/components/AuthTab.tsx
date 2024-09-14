@@ -41,7 +41,7 @@ const AuthTab = ({ picture }: AuthTabProps) => {
       <Popover>
         <PopoverTrigger>
           <Image
-            src={picture ? picture : "/placeholder.svg"}
+            src={picture ? picture : "/placeholder.jpeg"}
             alt="User Image"
             width={0}
             height={0}

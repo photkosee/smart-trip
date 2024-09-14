@@ -32,7 +32,7 @@ const TripCard = ({ trip }: TripCardProps) => {
       href={`/dashboard/${trip.id}`}
     >
       <Image
-        src={image ? image : "/placeholder.svg"}
+        src={image ? image : "/placeholder.jpeg"}
         alt="Trip Image"
         width={0}
         height={0}

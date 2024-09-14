@@ -35,7 +35,7 @@ const PlanCard = ({ plan }: PlanCardProps) => {
         cursor-pointer transition-all hover:scale-105 hover:shadow-md"
       >
         <Image
-          src={image ? image : "/placeholder.svg"}
+          src={image ? image : "/placeholder.jpeg"}
           alt="Place Image"
           width={0}
           height={0}

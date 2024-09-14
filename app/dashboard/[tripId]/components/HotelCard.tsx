@@ -33,7 +33,7 @@ const HotelCard = ({ hotel }: HotelCardProps) => {
       target="_blank"
     >
       <Image
-        src={image ? image : "/placeholder.svg"}
+        src={image ? image : "/placeholder.jpeg"}
         alt="Hotel Image"
         width={0}
         height={0}
