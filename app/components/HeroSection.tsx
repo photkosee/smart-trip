@@ -49,7 +49,7 @@ const HeroSection = () => {
         priority
         width={1080}
         height={1080}
-        className="h-[40vh] lg:h-[50vh] object-cover mx-auto w-auto"
+        className="object-cover mx-auto h-[300px] w-[300px] sm:w-[350px] md:h-[350px] lg:w-[450px] lg:h-[450px]"
       />
     </section>
   );
