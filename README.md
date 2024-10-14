@@ -92,6 +92,7 @@ Sometimes, I encounter a 504 error when trying to create a new plan, but no mean
 
 I just got another idea of implementing a webhook which could have solved this issue as well.
 
+### Interesting Screen when Opening the Site from LinkedIn (iPad)
 15/10/2024: I was fixing the screen flickering/shaking while scrolling on some specific browser on mobile and found out that this project of mine also has that issue when scrolling the landing page on iPad (only when open from LinkedIn). I found out that the reason behind this is due to how I set the Image in the hero section having width auto change according to the viewport height (I set its classname as `w-[60vh]`). It only cause an issue once you open it on LinkedIn from an iPad because the viewport from that is changing when scrolling. LinkedIn provides its on footer that will hide itself once you scroll down but will return once you scroll up. And that causes the viewport to keep changing making the image chaning its width accordingly. And that increased area effect the text next to it, it's wrapped into a new line! This is why the screen seems to be flickering/shaking because the height of some sections on the page keep changing. I might need to come up with a better word to descript the behavior but I will put a video here later. But well, what a good lesson to learn again, and now I know!
 
 
