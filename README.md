@@ -48,7 +48,7 @@ I ended up disabling that part for now and using placeholders for those images i
 ## Author
 
 Phot Koseekrainiramon
-- [LinkedIn](https://www.linkedin.com/in/phot-kosee/)
+- [LinkedIn](https://www.linkedin.com/in/photkosee/)
 - [GitHub](https://github.com/photkosee)
 
 ## Deployment
