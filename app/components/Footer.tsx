@@ -1,26 +1,22 @@
-import Link from "next/link";
-import { FaLinkedin } from "react-icons/fa";
-import { FaGithubSquare } from "react-icons/fa";
+import Image from "next/image";
 
 const Footer = () => {
   return (
-    <footer className="bg-secondary py-10 sm:py-14 text-green-800">
-      <div className="mx-auto container flex justify-center text-2xl sm:text-3xl gap-x-7">
-        <Link
-          href="https://github.com/photkosee/smart-trip"
-          target="_blank"
-          className="hover:text-green-600 transition-all"
-        >
-          <FaGithubSquare />
-        </Link>
-
-        <Link
-          href="https://www.linkedin.com/in/phot-kosee/"
-          target="_blank"
-          className="hover:text-green-600 transition-all"
-        >
-          <FaLinkedin />
-        </Link>
+    <footer className="bg-white border-t border-gray-200 py-10 sm:py-14">
+      <div className="mx-auto container max-w-6xl px-5">
+        <div className="flex flex-col gap-y-1 items-center">
+          <Image
+            src="/logo.svg"
+            alt="Logo"
+            width={0}
+            height={0}
+            priority
+            className="w-auto h-[40px] sm:h-[50px]"
+          />
+          <div className="text-lg text-neutral-600 text-center">
+            Turn your next trip into a hassle-free experience with Smart Trip.
+          </div>
+        </div>
       </div>
     </footer>
   );

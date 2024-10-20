@@ -1,6 +1,6 @@
 import dynamic from "next/dynamic";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Outfit } from "next/font/google";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 
 import "@/app/globals.css";
@@ -14,7 +14,7 @@ const Footer = dynamic(() => import("@/app/components/Footer"), {
   ssr: false,
 });
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Outfit({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Smart Trip",
