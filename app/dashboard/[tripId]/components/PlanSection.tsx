@@ -24,7 +24,7 @@ const PlanSection = ({ trip }: PlanSectionProps) => {
                   Day {index + 1} :{" "}
                   <span className="text-emerald-400">{itinerary.theme}</span>
                 </h4>
-                <div className="flex flex-col gap-y-2">
+                <div className="flex flex-col gap-y-2 w-full">
                   {itinerary.plan &&
                     itinerary.plan.map((plan: DocumentData, index: number) => (
                       <div key={index} className="text-neutral-400 text-base">
