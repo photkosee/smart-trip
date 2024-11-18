@@ -27,9 +27,9 @@ const PlanSection = ({ trip }: PlanSectionProps) => {
                 <div className="flex flex-col gap-y-2">
                   {itinerary.plan &&
                     itinerary.plan.map((plan: DocumentData, index: number) => (
-                      <p key={index} className="text-neutral-400 text-base">
+                      <div key={index} className="text-neutral-400 text-base">
                         <PlanCard plan={plan} />
-                      </p>
+                      </div>
                     ))}
                 </div>
               </div>
