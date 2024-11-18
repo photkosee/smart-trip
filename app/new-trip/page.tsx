@@ -27,6 +27,7 @@ const NewTripPage = () => {
       budget === 0 ? "cheap" : budget === 1 ? "mid" : "high";
     const currUser = JSON.parse(localStorage.getItem("user")!);
 
+    setOpen(false);
     setLoading(true);
 
     const docId = await geminiGenerateTrip({
