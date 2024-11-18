@@ -29,8 +29,9 @@ const LoadingDialog = ({ open }: LoadingDialogProps) => {
           }
           return prev + increment;
         }),
-      550
+      1000
     );
+
     return () => clearInterval(timer);
   }, [open]);
 
