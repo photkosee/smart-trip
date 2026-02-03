@@ -6,7 +6,6 @@ import { useGoogleLogin } from "@react-oauth/google";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -34,7 +33,7 @@ const LoginDialog = ({ open, setOpen, callback }: LoginDialogProps) => {
             Authorization: `Bearer ${token}`,
             Accept: "Application/json",
           },
-        }
+        },
       );
 
       const data = await response.json();
@@ -102,23 +101,21 @@ const LoginDialog = ({ open, setOpen, callback }: LoginDialogProps) => {
               className="w-auto h-14 mx-auto"
             />
           </DialogTitle>
-          <DialogDescription>
-            <div className="text-center flex flex-col gap-y-3">
-              <p>Sign in to continue</p>
-              <Button
-                variant={"outline"}
-                onClick={() => handleLogin()}
-                className="gap-x-2"
-              >
-                <FcGoogle className="w-6 h-6" />
-                Sign In with Google
-              </Button>
+          <div className="text-center flex flex-col gap-y-3">
+            <p>Sign in to continue</p>
+            <Button
+              variant={"outline"}
+              onClick={() => handleLogin()}
+              className="gap-x-2"
+            >
+              <FcGoogle className="w-6 h-6" />
+              Sign In with Google
+            </Button>
 
-              <Button variant={"outline"} onClick={() => handleLoginDemo()}>
-                Try Demo
-              </Button>
-            </div>
-          </DialogDescription>
+            <Button variant={"outline"} onClick={() => handleLoginDemo()}>
+              Try Demo
+            </Button>
+          </div>
         </DialogHeader>
       </DialogContent>
     </Dialog>
