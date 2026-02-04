@@ -4,7 +4,6 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 
 import { db } from "@/app/firebase";
 import { toast } from "@/hooks/use-toast";
-import OpenAI from "openai";
 
 export const fetchImage = async (
   data: { textQuery: string },
