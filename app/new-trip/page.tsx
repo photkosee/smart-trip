@@ -16,7 +16,7 @@ import { geminiGenerateTrip } from "@/app/action";
 const NewTripPage = () => {
   const router = useRouter();
   const { place, dayCount, budget, peopleCount, companions } = useAppSelector(
-    (state) => state.newTrip
+    (state) => state.newTrip,
   );
   const { email } = useAppSelector((state) => state.auth);
   const [open, setOpen] = useState<boolean>(false);

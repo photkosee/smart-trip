@@ -4,6 +4,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 
 import { db } from "@/app/firebase";
 import { toast } from "@/hooks/use-toast";
+import OpenAI from "openai";
 
 export const fetchImage = async (
   data: { textQuery: string },
@@ -62,11 +63,11 @@ export const geminiGenerateTrip = async ({
       process.env.NEXT_PUBLIC_GOOGLE_AI_API!,
     );
     const model = genAI.getGenerativeModel({
-      model: "gemini-1.5-flash",
+      model: "gemini-3-flash-preview",
     });
 
     const generationConfig = {
-      temperature: 1,
+      temperature: 0,
       topP: 0.95,
       topK: 64,
       maxOutputTokens: 8192,
@@ -87,6 +88,14 @@ export const geminiGenerateTrip = async ({
           parts: [{ text: process.env.NEXT_PUBLIC_AI_SAMPLE_OUTPUT! }],
         },
       ],
+      systemInstruction: {
+        role: "system",
+        parts: [
+          {
+            text: "You are a helpful travel planning assistant. Make sure that you follow the same JSON structure as the sample output strictly.",
+          },
+        ],
+      },
     });
 
     // Send the prompt to the AI
