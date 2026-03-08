@@ -99,7 +99,7 @@ export const geminiGenerateTrip = async ({
       },
     });
 
-    // Retry on 503 error (cold start / model loading)
+    // Retry on errors especially for a 503 (cold start / model loading)
     const MAX_RETRIES = 3;
     const RETRY_DELAY_MS = 3000;
     let result;
@@ -108,12 +108,7 @@ export const geminiGenerateTrip = async ({
         result = await chatSession.sendMessage(prompt);
         break;
       } catch (err) {
-        const is503 =
-          err instanceof Error &&
-          (err.message.includes("503") ||
-            err.message.toLowerCase().includes("service unavailable") ||
-            err.message.toLowerCase().includes("overloaded"));
-        if (is503 && attempt < MAX_RETRIES) {
+        if (attempt < MAX_RETRIES) {
           await sleep(RETRY_DELAY_MS * attempt);
         } else {
           throw err;
