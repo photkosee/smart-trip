@@ -35,6 +35,8 @@ export const fetchImage = async (
     });
 };
 
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
 export const geminiGenerateTrip = async ({
   place,
   dayCount,
@@ -97,9 +99,28 @@ export const geminiGenerateTrip = async ({
       },
     });
 
-    // Send the prompt to the AI
-    const result = await chatSession.sendMessage(prompt);
-    const response = result.response;
+    // Retry on 503 error (cold start / model loading)
+    const MAX_RETRIES = 3;
+    const RETRY_DELAY_MS = 3000;
+    let result;
+    for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
+      try {
+        result = await chatSession.sendMessage(prompt);
+        break;
+      } catch (err) {
+        const is503 =
+          err instanceof Error &&
+          (err.message.includes("503") ||
+            err.message.toLowerCase().includes("service unavailable") ||
+            err.message.toLowerCase().includes("overloaded"));
+        if (is503 && attempt < MAX_RETRIES) {
+          await sleep(RETRY_DELAY_MS * attempt);
+        } else {
+          throw err;
+        }
+      }
+    }
+    const response = result!.response;
     const output = response.text();
 
     // Save the trip data to the database
